@@ -1,0 +1,139 @@
+ontents:
+
+1. Getting Started
+1.1. Prerequisites
+1.1.1. For STEPS Core Modules
+1.1.2. For STEPS Advanced Modules
+1.1.3. Other Recommended
+1.2. Obtaining STEPS
+1.2.1. From Easy_Install
+1.2.2. From Sourceforge
+1.3. Installation
+1.3.1. Uninstall Old Release
+1.3.2. Install From Easy_Install
+1.3.3. Install From Binaries
+1.3.4. Install From Source Code Package
+1.4. Running STEPS
+2. Well-Mixed Reaction Systems
+2.1. Model Specification
+2.1.1. Model container
+2.1.2. Species
+2.1.3. Volume System
+2.1.4. Reactions
+2.2. Preparing geometry for well-mixed simulation
+2.3. Simulation with Wmdirect
+2.4. Controlling the simulation
+3. Surface-Volume Reactions (Example: IP3 Model)
+3.1. Model specification
+3.1.1. Model container
+3.1.2. Species
+3.1.3. Surface System
+3.1.4. Reactions
+3.2. Geometry specification
+3.3. Simulation with Wmdirect
+4. Simulating Diffusion in Volumes
+4.1. Analytical solution
+4.2. Modelling solution
+4.2.1. Organisation of code
+4.2.2. Model specification
+4.2.3. Geometry specification
+4.2.4. Simulation with Tetexact
+4.2.5. Plotting simulation output
+5. Simulating Diffusion on Surfaces
+5.1. Analytical solution
+5.2. Modelling solution
+5.2.1. Organisation of code
+5.2.2. Model specification
+5.2.3. Geometry specification
+5.2.4. Simulation with Tetexact
+5.2.5. Plotting simulation output
+5.2.6. Simulation with TetODE
+6. Diffusion Boundary
+6.1. Modeling solution
+6.1.1. Organisation of code
+6.1.2. Model specification
+6.1.3. Geometry specification
+6.1.4. Simulation with Tetexact
+6.1.5. Plotting simulation output
+7. SBML support
+7.1. Introduction
+7.2. Level of support
+7.2.1. Supported
+7.2.2. Not Supported
+7.2.3. SBML Test Suite
+7.2.4. Support for MathML
+7.3. Other considerations
+7.3.1. Units
+7.3.2. Default volume
+7.4. SBML file import solution
+7.4.1. Structure of code
+7.4.2. SBML file import
+7.4.3. Biochemical model and Geometry description
+7.4.4. Simulation with well-mixed solver
+7.4.5. Complete code
+7.4.6. SBML Interface methods
+7.4.7. Example import function usage
+8. Simulating Membrane Potential
+8.1. Markov gating scheme
+8.2. Modelling solution
+8.2.1. Organisation of code
+8.2.2. Model specification
+8.2.3. Geometry specification
+8.2.4. Simulation with Tetexact
+8.2.5. Plotting simulation output
+8.2.6. Simulation with TetODE
+9. Stochastic Calcium Burst model with GHK currents
+9.1. Modelling solution
+9.1.1. extra/constants.py file
+9.1.2. Command line execution
+9.2. Model specification
+9.2.1. Calcium dynamics
+9.2.2. P-type Calcium channel
+9.2.3. T-type Calcium channel
+9.2.4. BK-type Calcium-activated Potassium channel
+9.2.5. SK-type Calcium-activated Potassium channel
+9.2.6. Leak channel
+9.3. Geometry specification
+9.4. Simulation with Tetexact
+9.4.1. Initialization
+9.4.2. Running the simulation
+10. STEPS-CUBIT Geometry Preparation Toolkit
+10.1. Prerequisites
+10.2. Installation
+10.2.1. Independent Installation
+10.2.2. Integrative Installation
+10.3. Examples
+10.3.1. Spatial IP3 Receptor Model
+10.4. Advanced Topic: Element Selection
+10.4.1. Direct Selection from Component Panel
+10.4.2. Direct Box/Polygon Selection with Mouse
+10.4.3. Indeirect Bounding Object Selection
+10.5. Other Supporting Functions
+11. Visualization Toolkit
+11.1. Prerequisites
+11.2. Installation
+11.3. Examples
+11.3.1. Visualization of Spatial IP3 Receptor Model
+11.4. Showcase: Plots and Visual Components
+11.4.1. Plots
+11.4.2. Visual Component
+12. Preliminary Functionalities
+12.1. meshio: Mesh Input/Output Module
+12.2. Checkpointing
+13. API References
+13.1. steps.model
+13.2. steps.geom
+13.3. steps.rng
+13.4. steps.solver
+13.5. steps.utilities.meshio
+13.6. steps.utilities.sbml
+13.7. API Reference: STEPS-CUBIT Geometry Preparation Toolkit (Independent)
+13.7.1. Shadow Classes
+13.7.2. Functions
+13.8. API Reference: steps.visual (Visualization Toolkit)
+13.8.1. Sim Control
+13.8.2. Sim Display
+13.8.3. Dynamic Component
+13.8.4. Static Component
+13.8.5. Plotting
+13.8.6. Color

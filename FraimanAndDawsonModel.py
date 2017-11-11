@@ -1,0 +1,269 @@
+#fraiman and dawson model
+
+#model container
+import steps.model as smodel 
+mdl = smodel.Model()
+
+#spicies
+Ca = smodel.Spec('Ca', mdl)
+IP3 = smodel.Spec('IP3', mdl)
+#ER = smodel.Spec('ER', mdl)
+#cyt = smodel.Spec('cyt', mdl)
+
+#receptor state objects
+A00 = smodel.Spec('A00', mdl)
+A10 = smodel.Spec('A10', mdl)
+A11 = smodel.Spec('A11', mdl)
+Oa = smodel.Spec('Oa', mdl)
+Ob = smodel.Spec('Ob', mdl)
+Oc = smodel.Spec('Oc', mdl)
+Ia = smodel.Spec('Ia', mdl)
+Ib = smodel.Spec('Ib', mdl) 
+A01 = smodel.Spec('A01', mdl)
+Pa = smodel.Spec('Pa', mdl)
+Pb = smodel.Spec('Pb', mdl)
+Pc = smodel.Spec('Pc', mdl)
+Sa = smodel.Spec('Sa', mdl)
+Sb = smodel.Spec('Sb', mdl)
+
+#create the volume system
+vsys = smodel.Volsys('vsys', mdl)
+
+#the forward reaction without the forward binding reaction
+A11_to_Oa_f = smodel.Reac('A11_to_Oa_f', vsys, lhs = [A11], rhs = [Oa], kcst = 1800)
+Oa_to_Ob_f = smodel.Reac('Oa_to_Ob_f', vsys, lhs = [Oa], rhs = [Ob], kcst = 133)
+Oc_to_Ia_f = smodel.Reac('Oc_to_Ia_f', vsys, lhs = [Oc], rhs = [Ia], kcst = 630)
+A01_to_Pa_f = smodel.Reac('A01_to_Pa_f', vsys, lhs = [A01], rhs = [Pa], kcst = 0.3)
+Pa_to_Pb_f = smodel.Reac('Pa_to_Pb_f', vsys, lhs = [Pa], rhs = [Pb], kcst = 500)
+Pc_to_Sa_f = smodel.Reac('Pc_to_Sa_f', vsys, lhs = [Pc], rhs = [Sa], kcst = 3000)
+
+#the backward reaction without the backrward unbinding reaction
+A11_to_Oa_b = smodel.Reac('A11_to_Oa_b', vsys, lhs = [Oa], rhs = [A11], kcst = 330)
+Oa_to_Ob_b = smodel.Reac('Oa_to_Ob_b', vsys, lhs = [Ob], rhs = [Oa], kcst = 1500)
+Oc_to_Ia_b = smodel.Reac('Oc_to_Ia_b', vsys, lhs = [Ia], rhs = [Oc], kcst = 400)
+A01_to_Pa_b = smodel.Reac('A01_to_Pa_b', vsys, lhs = [Pa], rhs = [A01], kcst = 700)
+Pa_to_Pb_b = smodel.Reac('Pa_to_Pb_b', vsys, lhs = [Pb], rhs = [Pa], kcst = 100)
+Pc_to_Sa_b = smodel.Reac('Pc_to_Sa_b', vsys, lhs = [Sa], rhs = [Pc], kcst = 250)
+
+#surface system
+		#surface system is similar to the valume system.
+surfsys = smodel.Surfsys('ssys', mdl)
+
+#the forward bindng reactions
+A00_bind_IP3_f = smodel.SReac('A00_bind_IP3_f', surfsys, olhs = [IP3], slhs = [A00], srhs = [A10])
+
+A10_bind_Ca_f = smodel.SReac('A10_bind_Ca_f', surfsys, olhs = [Ca], slhs = [A10], srhs = [A11])
+Ob_bind_Ca_f = smodel.SReac('Ob_bind_Ca_f', surfsys, olhs = [Ca], slhs = [Ob], srhs = [Oc])
+Ia_bind_Ca_f = smodel.SReac('Ia_bind_Ca_f', surfsys, olhs = [Ca], slhs = [Ia], srhs = [Ib])
+
+A00_bind_Ca_f = smodel.SReac('A00_bind_Ca_f', surfsys, olhs = [Ca], slhs = [A00], srhs = [A01])
+Pb_bind_Ca_f = smodel.SReac('Pb_bind_Ca_f', surfsys, olhs = [Ca], slhs = [Pb], srhs = [Pc])
+Sa_bind_Ca_f = smodel.SReac('Sa_bind_Ca_f', surfsys, olhs = [Ca], slhs = [Sa], srhs = [Sb])
+
+A01_bind_IP3_f = smodel.SReac('A01_bind_IP3_f', surfsys, olhs = [IP3], slhs = [A01], srhs = [A11])
+
+#the backward unbinding reactions
+A00_bind_IP3_b = smodel.SReac('A00_bind_IP3_b', surfsys, slhs = [A10], orhs = [IP3], srhs = [A00])
+
+A10_bind_Ca_b = smodel.SReac('A10_bind_Ca_b', surfsys, slhs = [A11], orhs = [Ca], srhs = [A10])
+Ob_bind_Ca_b = smodel.SReac('Ob_bind_Ca_b', surfsys, slhs = [Oc], orhs = [Ca], srhs = [Ob])
+Ia_bind_Ca_b = smodel.SReac('Ia_bind_Ca_b', surfsys, slhs = [Ib], orhs = [Ca], srhs = [Ia])
+
+A00_bind_Ca_b = smodel.SReac('A00_bind_Ca_b', surfsys, slhs = [A01], orhs = [Ca], srhs = [A00])
+Pb_bind_Ca_b = smodel.SReac('Pb_bind_Ca_b', surfsys, slhs = [Pc], orhs = [Ca], srhs = [Pb])
+Sa_bind_Ca_b = smodel.SReac('Sa_bind_Ca_b', surfsys, slhs = [Sb], orhs = [Ca], srhs = [Sa])
+
+A01_bind_IP3_b = smodel.SReac('A01_bind_IP3_b', surfsys, slhs = [A11], orhs = [IP3], srhs = [A01])
+
+#Ca ion passing through open IP3R channel
+#A00_Oa_Ca_channel_f = smodel.SReac('A00_0a_Ca_channel_f', surfsys, ilhs = [Ca], slhs = [Oa], orhs = [Ca], srhs = [Oa])
+#A00_Ob_Ca_channel_f = smodel.SReac('A00_Ob_channel_f', surfsys, ilhs = [Ca], slhs = [Ob], orhs = [Ca], srhs = [Ob])
+#A00_Oc_Ca_channel_f = smodel.SReac('A00_Oc_Ca_channel_f', surfsys, ilhs = [Ca], slhs = [Oc], orhs = [Ca], srhs = [Oc])
+
+#set constant
+A00_bind_IP3_f.setKcst(6670e6)
+
+A10_bind_Ca_f.setKcst(500e6)		
+Ob_bind_Ca_f.setKcst(70e6)		
+Ia_bind_Ca_f.setKcst(60e6)		
+
+A00_bind_Ca_f.setKcst(5000e6)			
+Pb_bind_Ca_f.setKcst(5000e6)			
+Sa_bind_Ca_f.setKcst(5000e6)			
+
+A01_bind_IP3_f.setKcst(1540e6)
+
+
+
+A00_bind_IP3_b.setKcst(200)	
+
+A10_bind_Ca_b.setKcst(667)				 
+Ob_bind_Ca_b.setKcst(2000)					
+Ia_bind_Ca_b.setKcst(16)				
+
+A00_bind_Ca_b.setKcst(1)				
+Pb_bind_Ca_b.setKcst(150)				
+Sa_bind_Ca_b.setKcst(20)				
+
+A01_bind_IP3_b.setKcst(18)
+
+#geometry setup
+import steps.geom as swm
+wmgeom = swm.Geom()
+
+#create the Cytosole compartment
+cyt = swm.Comp('cyt',wmgeom)
+cyt.addVolsys('vsys')
+cyt.setVol(0.1e-18)
+
+#Create the Emdoplasmic Reticulum compartment
+ER = swm.Comp('ER', wmgeom)
+ER.addVolsys('vsys')
+ER.setVol(0.1e-18)
+
+#ER it the inner compertment, cyr is the outer compartment
+memb = swm.Patch('memb', wmgeom, ER, cyt)
+memb.addSurfsys('ssys')
+memb.setArea(0.21544368e-12)
+
+print 'Inner compartment to memb is', memb.getIComp().getID()
+print 'Outer compartment to memb is', memb.getOComp().getID()
+
+#RNG setup
+import steps.rng as srng
+import pylab
+import numpy
+
+
+# Ca2+ concentrations in cytosol
+ca_concs = numpy.zeros([100])
+ca_concs[0] = 0.001e-6
+ca_concs[1] = 0.003e-6
+ca_concs[2] = 0.007e-6
+ca_concs[3] = 0.01e-6
+ca_concs[4] = 0.013e-6
+ca_concs[5] = 0.03e-6
+ca_concs[6] = 0.10e-6
+ca_concs[7] = 0.13e-6
+ca_concs[8] = 0.20e-6
+ca_concs[9] = 0.27e-6
+ca_concs[10] = 0.28e-6
+ca_concs[11] = 0.30e-6
+ca_concs[12] = 0.33e-6
+ca_concs[13] = 0.4e-6
+ca_concs[14] = 0.50e-6
+ca_concs[15] = 0.6e-6
+ca_concs[16] = 0.7e-6
+ca_concs[17] = 0.8e-6
+ca_concs[18] = 1.00e-6
+ca_concs[19] = 1.50e-6
+ca_concs[20] = 3.00e-6
+ca_concs[21] = 10.00e-6
+ca_concs[22] = 30.00e-6
+ca_concs[23] = 100.00e-6
+#mol/l
+
+r = srng.create('mt19937', 1000)
+r.initialize(7233)
+
+#solver setup
+import steps.solver as ssolover
+sim = ssolover.Wmdirect(mdl, wmgeom, r)
+
+NITER = 100
+tpnt = numpy.arange(0.0, 0.201, 0.001)
+res = numpy.zeros([NITER, 201, 4])
+res_std = numpy.zeros([201, 4])
+res_std1 = numpy.zeros([201, 4])
+res_std2 = numpy.zeros([201, 4])
+
+
+#run simulation
+#for i in range(0, NITER):
+#		sim.reset()
+#		sim.setPatchCount('memb', 'A00', 1) 
+#		sim.setCompConc('cyt', 'IP3', 10e-6)
+#		sim.setCompClamped('cyt', 'IP3', 1)
+#		sim.setCompConc('cyt', 'Ca', ca_concs[i])
+#		sim.setCompClamped('cyt', 'Ca', 1)
+#		sim.setCompConc('ER', 'Ca', 150e-6) 
+#		sim.setCompClamped('ER', 'Ca', 1)
+
+#		for t in range(0, 201):
+#				sim.run(tpnt[t])
+#				res[i, t, 0] = sim.getPatchCount('memb', 'Oa')
+#				res[i, t, 1] = sim.getPatchCount('memb', 'Ob')
+#				res[i, t, 2] = sim.getPatchCount('memb', 'Oc')
+#				#res[i, t, 3] = sim.getCompConc('cyt','Ca')
+#				pylab.plot(tpnt, res[i, :, 0], color = 'blue', linewidth = 0.1)
+
+res_mean = numpy.mean(res, 0)
+res_std = numpy.std(res, 0)
+res_std1 = res_mean[:, 0] + res_std[:, 0]
+res_std2 = res_mean[:, 0] - res_std[:, 0]
+
+pylab.plot(tpnt, res_mean[:, 0], color = 'black', linewidth = 2.0, label = 'mean')
+pylab.plot(tpnt, res_std1, color = 'gray', linewidth = 1.0, label = 'std')
+pylab.plot(tpnt, res_std2, color = 'gray', linewidth = 1.0)
+
+pylab.xlabel('Time(sec)')
+pylab.ylabel('# IP3 receptors in open state')
+pylab.title('IP3 receptor model: %d iterations with Wmdirect'%NITER)
+pylab.ylim(0)
+pylab.legend()
+pylab.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
